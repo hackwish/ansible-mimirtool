@@ -1,20 +1,42 @@
 ---
 # tasks file for ansible-mimirtool
-- name: Install Mimirtool
-  get_url:
-    url: https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
-    dest: /usr/local/bin/mimirtool
-  when: ansible_architecture == 'x86_64'
+
+# Install mimirtool on Linux
+- name: Install Mimirtool on Linux
+  block:
+  - name: Install Mimirtool (x86_64)
+    get_url:
+      url: https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-amd64
+      dest: /usr/local/bin/mimirtool
+    when: ansible_architecture == 'x86_64'
+    tags: mimirtool
+
+  - name: Install Mimirtool (arm64)
+    get_url:
+      url: https://github.com/grafana/mimir/releases/latest/download/mimirtool-linux-arm64
+      dest: /usr/local/bin/mimirtool
+    when: ansible_architecture == 'arm64'
+    tags: mimirtool
+
+  - name: Change file ownership, group and permissions
+    file:
+      path: /usr/local/bin/mimirtool
+      owner: root
+      group: root
+      mode: '0755'
+    tags: mimirtool
+  when: ansible_system == "Linux"
   tags: mimirtool
 
-- name: Change file ownership, group and permissions
-  file:
-    path: /usr/local/bin/mimirtool
-    owner: root
-    group: root
-    mode: '0755'
+# Install mimirtool on MacOS
+- name: Install Mimirtool on MacOS
+  brew:
+    name: mimirtool
+    state: present
+  when: ansible_system == "Darwin"
   tags: mimirtool
 
+# Check mimirtool version
 - command: mimirtool version
   register: result_mimirtool
   failed_when: false
