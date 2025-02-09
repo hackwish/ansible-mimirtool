@@ -30,7 +30,7 @@
 
 # Install mimirtool on MacOS
 - name: Install Mimirtool on MacOS
-  brew:
+  homebrew:
     name: mimirtool
     state: present
   when: ansible_system == "Darwin"
