@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/hackwish/ansible-mimirtool/compare/v1.0.1...v1.0.2) (2025-02-09)
+
+
+### Bug Fixes
+
+* **packages:** fix brew ([eae6f80](https://github.com/hackwish/ansible-mimirtool/commit/eae6f80a40c96484fcd5d28a310520ebcdccc7c1))
+
 ## [1.0.1](https://github.com/hackwish/ansible-mimirtool/compare/v1.0.0...v1.0.1) (2025-02-07)
 
 
